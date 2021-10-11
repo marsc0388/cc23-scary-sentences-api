@@ -12,11 +12,14 @@ type Story {
     author: String
 },
 input StoryInput {
+    id: Int
     body: String!
     author: String!
 }
 type Mutation {
     AddStory(input: StoryInput): Story!
+    DeleteStory(id: Int!): Story!
+    EditStory(input: StoryInput): Story!
 }
 `
 
@@ -42,6 +45,25 @@ const resolvers = {
                     body: args.input.body,
                     author: args.input.author,
                 },
+            })
+            return result;
+        },
+        DeleteStory: async (_, args) => {
+            const result = await context.prisma.story.delete({
+                where: {id: args.id}
+            })
+            return result;
+        },
+        EditStory: async(_, args) => {
+            const result = await context.prisma.story.update({
+                where: {
+                    id: args.input.id
+                },
+                data: {
+                    id: args.input.id,
+                    body: args.input.body,
+                    author: args.input.author
+                }
             })
             return result;
         }
