@@ -10,6 +10,13 @@ type Story {
     id: Int
     body: String
     author: String
+},
+input StoryInput {
+    body: String!
+    author: String!
+}
+type Mutation {
+    AddStory(input: StoryInput): Story!
 }
 `
 
@@ -26,6 +33,17 @@ const resolvers = {
         Stories: async () => {
             const results = await context.prisma.story.findMany();
             return results;
+        }
+    },
+    Mutation: {
+        AddStory: async (parent, args) => {
+            const result = await context.prisma.story.create({
+                data: {
+                    body: args.input.body,
+                    author: args.input.author,
+                },
+            })
+            return result;
         }
     }
 }
