@@ -18,10 +18,13 @@
   },
   "homepage": "https://github.com/marsc0388/cc23-scary-sentences-api#readme",
   "dependencies": {
+    "@graphql-tools/schema": "^8.2.0",
     "@prisma/client": "^3.2.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
-    "graphql": "^15.6.1"
+    "graphql": "^15.6.1",
+    "graphql-scalars": "^1.11.1",
+    "jest": "^27.2.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.13",

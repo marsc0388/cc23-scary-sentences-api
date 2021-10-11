@@ -1,31 +1,39 @@
-const {
-    GraphQLSchema,
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLNonNull,
-    GraphQLInt
-} = require('graphql');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
+const context = require('./context')
 
-const schema = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'Test',
-        fields: () => ({
-            message: {
-                type: GraphQLString,
-                resolve: () => 'This is a Test!!'
-            }
-        })
-    })
-})
+const typeDefs =    `
+type Query {
+    Story(id: Int!): Story
+    Stories: [Story]
+},
+type Story {
+    id: Int
+    body: String
+    author: String
+}
+`
 
-const StoryType = new GraphQLObjectType({
-    name: 'Story',
-    description: 'This represents a short scary story',
-    fields: () => ({
-        id: {type: GraphQLNonNull(GraphQLInt)},
-        body: {type: GraphQLNonNull(GraphQLString)},
-        author: {type: GraphQLString}
-    })
-})
+const resolvers = {
+    Query: {
+        Story: async (_, args) => {
+            const results = await context.prisma.story.findUnique({
+                where: {
+                    id: args.id
+                }
+            })
+            return results;
+        },
+        Stories: async () => {
+            const results = await context.prisma.story.findMany();
+            return results;
+        }
+    }
+}
+
+
+const schema = makeExecutableSchema({
+    resolvers,
+    typeDefs,
+});
 
 module.exports = schema;
