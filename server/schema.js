@@ -18,4 +18,14 @@ const schema = new GraphQLSchema({
     })
 })
 
+const StoryType = new GraphQLObjectType({
+    name: 'Story',
+    description: 'This represents a short scary story',
+    fields: () => ({
+        id: {type: GraphQLNonNull(GraphQLInt)},
+        body: {type: GraphQLNonNull(GraphQLString)},
+        author: {type: GraphQLString}
+    })
+})
+
 module.exports = schema;
