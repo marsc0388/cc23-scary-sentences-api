@@ -3,7 +3,9 @@
 ----
 “This was created during my time as a student at Code Chrysalis”
 
-##Overview
+#Client can be found here: [https://github.com/marsc0388/cc23-scary-sentences-api-client]
+
+#Overview
 
 This is a small solo API project that was developed during my time as a student at Code Chrysalis - CC23.
 
